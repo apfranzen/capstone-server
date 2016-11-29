@@ -3,7 +3,7 @@ const router = express.Router();
 // const cloudinary = require('./cloudinary.js');
 const knex = require('../db/knex');
 const axios = require('axios');
-var cloudinary = require('cloudinary')
+var cloudinary = require('cloudinary');
 
 cloudinary.config({
   cloud_name: process.env.cloud_name,
