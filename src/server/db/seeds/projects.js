@@ -1,16 +1,12 @@
-var faker = require('faker');
-
 exports.seed = function(knex, Promise) {
-  let numberOfArrays = new Array(100);
-  let arrayOfProjects = Array.from(numberOfArrays).map(() => {
-    return generateProjects(knex);
-  });
-  return Promise.all(arrayOfProjects);
+  // Deletes ALL existing entries
+  return knex('projects').del()
+    .then(function () {
+      return Promise.all([
+        // Inserts seed entries
+        knex('projects').insert({name: 'galvanize'}),
+        knex('projects').insert({name: 'hospital'}),
+        knex('projects').insert({name: 'data center'})
+      ]);
+    });
 };
-
-function generateProjects (knex) {
-  return knex('projects')
-  .insert({
-    project: faker.commerce.color()
-  });
-}

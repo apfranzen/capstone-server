@@ -1,7 +1,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('projects', (table) => {
     table.increments();
-    table.varchar('project');
+    table.varchar('name');
     table.timestamp('created_at').defaultTo(knex.fn.now());
   });
 };
