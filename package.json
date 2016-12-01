@@ -7,7 +7,9 @@
     "test": "./node_modules/mocha/bin/_mocha"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "body-parser": "~1.15.1",
+    "cloudinary": "^1.4.6",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
