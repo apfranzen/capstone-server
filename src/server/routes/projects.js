@@ -16,7 +16,6 @@ router.get('/', (req, res, next) => {
   .where('main', true)
   .select('projects.name', 'pictures.pic_url')
   .then((payload) => {
-    console.log('payload: ', payload);
     res.status(200).json({
       status: 'success',
       data: payload
@@ -94,7 +93,6 @@ router.get('/:project', (req, res, next) => {
   })
   .select('*')
   .then((pictures) => {
-    console.log('pictures: ', pictures);
     res.status(200).json({
       status: 'success',
       data: pictures
@@ -108,6 +106,7 @@ router.get('/:project', (req, res, next) => {
 router.get('/:project/:room', (req, res, next) => {
   let project = req.params.project
   let room = req.params.room
+  console.log('room: ', room, 'project: ', project);
   return knex('pictures')
   .where({
     project: project,
@@ -115,6 +114,7 @@ router.get('/:project/:room', (req, res, next) => {
   })
   .select('*')
   .then((pictures) => {
+    console.log(pictures);
     res.status(200).json({
       status: 'success',
       data:pictures
@@ -124,6 +124,21 @@ router.get('/:project/:room', (req, res, next) => {
     console.log('err: ', err);
     return next(err);
   });
+});
+
+/* get all picures from db */
+router.get('/query/test/allpics', (req, res, next) => {
+  return knex('pictures')
+  .select('*')
+  .then((pictures) => {
+    res.status(200).json({
+      status: 'success',
+      data: pictures
+    });
+  })
+  .catch((err) => {
+    console.log('err: ', err);
+    return next(err); });
 });
 
 module.exports = router;
