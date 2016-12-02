@@ -87,10 +87,10 @@ router.get('/', (req, res, next) => {
 
 /* get picures from db */
 router.get('/:project', (req, res, next) => {
+  let project = req.params.project
   return knex('pictures')
   .where({
-    project: 'galvanize',
-    room: 'classroom'
+    project: project
   })
   .select('*')
   .then((pictures) => {
@@ -103,6 +103,27 @@ router.get('/:project', (req, res, next) => {
   .catch((err) => {
     console.log('err: ', err);
     return next(err); });
+});
+
+router.get('/:project/:room', (req, res, next) => {
+  let project = req.params.project
+  let room = req.params.room
+  return knex('pictures')
+  .where({
+    project: project,
+    room: room
+  })
+  .select('*')
+  .then((pictures) => {
+    res.status(200).json({
+      status: 'success',
+      data:pictures
+    });
+  })
+  .catch((err) => {
+    console.log('err: ', err);
+    return next(err);
+  });
 });
 
 module.exports = router;
