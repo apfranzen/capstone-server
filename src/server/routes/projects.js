@@ -36,8 +36,16 @@ router.get('/:project', (req, res, next) => {
   })
   .select('*')
   .then((pictures) => {
+    // filter through and get unique rooms
+    var allRooms = [];
+    pictures.forEach((picture) => {
+      allRooms.push(picture.room)
+    })
+    console.log('pictures from /:project route: ', pictures);
+    var uniqueRooms = allRooms.filter( onlyUnique );
     res.status(200).json({
       status: 'success',
+      rooms: uniqueRooms,
       data: pictures
     });
   })
@@ -45,6 +53,13 @@ router.get('/:project', (req, res, next) => {
     console.log('err: ', err);
     return next(err); });
 });
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
+// usage example:
+var a = ['a', 1, 'a', 2, '1'];
 
 router.get('/:project/:room', (req, res, next) => {
   let project = req.params.project
