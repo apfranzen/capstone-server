@@ -50,4 +50,19 @@ router.get('/', (req, res, next) => {
   // });
 });
 
+/* get all picures from db */
+router.get('/query/allpics', (req, res, next) => {
+  return knex('pictures')
+  .select('*')
+  .then((pictures) => {
+    res.status(200).json({
+      status: 'success',
+      data: pictures
+    });
+  })
+  .catch((err) => {
+    console.log('err: ', err);
+    return next(err); });
+});
+
 module.exports = router;

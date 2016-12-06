@@ -4,9 +4,24 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return Promise.all([
         // Inserts seed entries
-        knex('projects').insert({name: 'Galvanize'}),
-        knex('projects').insert({name: 'Hospital'}),
-        knex('projects').insert({name: 'Data Center'})
+        knex('projects').insert({
+          name: 'Galvanize',
+          status: 'In Progress',
+          city: 'Denver',
+          state: 'CO'
+        }),
+        knex('projects').insert({
+          name: 'Hospital',
+          status: 'In Progress',
+          city: 'Chicago',
+          state: 'IL'
+        }),
+        knex('projects').insert({
+          name: 'Data Center',
+          status: 'Complete',
+          city: 'Fort Collins',
+          state: 'CO'
+        })
       ]);
     });
 };

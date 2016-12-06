@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const knex = require('../db/knex');
 var cloudinary = require('cloudinary');
+var moment = require('moment');
 
 cloudinary.config({
   cloud_name: process.env.cloud_name,
@@ -59,7 +60,7 @@ router.get('/:project/:room', (req, res, next) => {
     console.log(pictures);
     res.status(200).json({
       status: 'success',
-      data:pictures
+      data: pictures
     });
   })
   .catch((err) => {
@@ -67,20 +68,32 @@ router.get('/:project/:room', (req, res, next) => {
     return next(err);
   });
 });
-
-/* get all picures from db */
-router.get('/query/test/allpics', (req, res, next) => {
+// Get large picture
+router.get('/:project/:room/:pic_url', (req, res, next) => {
+  let project = req.params.project
+  let room = req.params.room
+  let pic_url = req.params.pic_url
+  console.log('room: ', room, 'project: ', project, 'pic_url: ', pic_url);
   return knex('pictures')
+  .where({
+    project: project,
+    room: room,
+    pic_url: pic_url
+  })
   .select('*')
-  .then((pictures) => {
+  .then((picture) => {
+    console.log(picture);
+    var date = moment(picture[0].created_at).format('LLLL');
     res.status(200).json({
       status: 'success',
-      data: pictures
+      data: picture,
+      date: date
     });
   })
   .catch((err) => {
     console.log('err: ', err);
-    return next(err); });
+    return next(err);
+  });
 });
 
 module.exports = router;
