@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.varchar('project');
     table.varchar('room');
+    table.varchar('level');
     table.varchar('orientation');
     table.varchar('pic_url');
     table.boolean('main');
